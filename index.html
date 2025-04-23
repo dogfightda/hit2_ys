@@ -1,0 +1,653 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>대왕판다의 연성 조합 단계 예측기에 오신걸 환영 합니다.</title>
+  <style>
+    body {
+        font-family: 'Segoe UI', 'Noto Sans KR', sans-serif;
+        background-color: #f9fafb;
+        color: #333;
+        padding: 30px;
+        line-height: 1.6;
+    }
+    h2 {
+        color: #2c3e50;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        font-size: 1.6em;
+    }
+    h3 {
+        color: #1a1a1a;
+        font-size: 1.3em;
+        margin-top: 20px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 30px;
+        background-color: #ffffff;
+        box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #f1f5f9;
+        color: #444;
+        font-weight: 600;
+    }
+    select {
+        width: 100%;
+        padding: 6px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fff;
+        font-size: 14px;
+    }
+    #stageResult {
+        color: #e74c3c;
+        font-weight: bold;
+        font-size: 1.7em;
+    }
+    
+    body { font-family: sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+    th, td { border: 1px solid #999; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
+    select { width: 100%; }
+    #stageResult { color: red; font-weight: bold; font-size: 1.5em; }
+  </style>
+</head>
+<body>
+  <h2 style="text-align: center; margin-bottom: 40px;">대왕판다의 연성 조합 단계 예측기에 오신걸 환영 합니다.</h2>
+  <table>
+    <tr><th>번호</th><th>등급</th><th>강화 단계</th><th>유형</th><th>점수</th></tr>
+    
+        <tr>
+            <td>1</td>
+            <td>
+        <select id="grade1">
+            <option value="고급">고급</option>
+            <option value="희귀">희귀</option>
+            <option value="영웅" selected>영웅</option>
+            <option value="+8 회귀 연성의 망치 (캐릭터 귀속)">+8 회귀 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+11 회귀 연성의 망치 (캐릭터 귀속)">+11 회귀 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+5 영웅 연성의 망치 (캐릭터 귀속)">+5 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+9 영웅 연성의 망치 (캐릭터 귀속)">+9 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+12 영웅 연성의 망치 (캐릭터 귀속)">+12 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="고급 스킬북">고급 스킬북</option>
+            <option value="희귀 스킬북">희귀 스킬북</option>
+            <option value="영웅 스킬북">영웅 스킬북</option>
+        </select></td>
+            <td id="level_cell1"><select id='level1'><option value='1' >1</option><option value='2' >2</option><option value='3' >3</option><option value='4' >4</option><option value='5' >5</option><option value='6' >6</option><option value='7' selected>7</option><option value='8' >8</option><option value='9' >9</option><option value='10' >10</option><option value='11' >11</option><option value='12' >12</option></select></td>
+            <td id="type_cell1">
+        <select id="type1">
+            <option value="거래 가능" selected>거래 가능</option>
+            <option value="귀속">귀속</option>
+        </select></td>
+            <td id="score1">-</td>
+        </tr>
+        
+        <tr>
+            <td>2</td>
+            <td>
+        <select id="grade2">
+            <option value="고급">고급</option>
+            <option value="희귀">희귀</option>
+            <option value="영웅" selected>영웅</option>
+            <option value="+8 회귀 연성의 망치 (캐릭터 귀속)">+8 회귀 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+11 회귀 연성의 망치 (캐릭터 귀속)">+11 회귀 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+5 영웅 연성의 망치 (캐릭터 귀속)">+5 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+9 영웅 연성의 망치 (캐릭터 귀속)">+9 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+12 영웅 연성의 망치 (캐릭터 귀속)">+12 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="고급 스킬북">고급 스킬북</option>
+            <option value="희귀 스킬북">희귀 스킬북</option>
+            <option value="영웅 스킬북">영웅 스킬북</option>
+        </select></td>
+            <td id="level_cell2"><select id='level2'><option value='1' >1</option><option value='2' >2</option><option value='3' >3</option><option value='4' >4</option><option value='5' >5</option><option value='6' >6</option><option value='7' selected>7</option><option value='8' >8</option><option value='9' >9</option><option value='10' >10</option><option value='11' >11</option><option value='12' >12</option></select></td>
+            <td id="type_cell2">
+        <select id="type2">
+            <option value="거래 가능" selected>거래 가능</option>
+            <option value="귀속">귀속</option>
+        </select></td>
+            <td id="score2">-</td>
+        </tr>
+        
+        <tr>
+            <td>3</td>
+            <td>
+        <select id="grade3">
+            <option value="고급">고급</option>
+            <option value="희귀">희귀</option>
+            <option value="영웅" selected>영웅</option>
+            <option value="+8 회귀 연성의 망치 (캐릭터 귀속)">+8 회귀 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+11 회귀 연성의 망치 (캐릭터 귀속)">+11 회귀 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+5 영웅 연성의 망치 (캐릭터 귀속)">+5 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+9 영웅 연성의 망치 (캐릭터 귀속)">+9 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+12 영웅 연성의 망치 (캐릭터 귀속)">+12 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="고급 스킬북">고급 스킬북</option>
+            <option value="희귀 스킬북">희귀 스킬북</option>
+            <option value="영웅 스킬북">영웅 스킬북</option>
+        </select></td>
+            <td id="level_cell3"><select id='level3'><option value='1' >1</option><option value='2' >2</option><option value='3' >3</option><option value='4' >4</option><option value='5' selected>5</option><option value='6' >6</option><option value='7' >7</option><option value='8' >8</option><option value='9' >9</option><option value='10' >10</option><option value='11' >11</option><option value='12' >12</option></select></td>
+            <td id="type_cell3">
+        <select id="type3">
+            <option value="거래 가능" selected>거래 가능</option>
+            <option value="귀속">귀속</option>
+        </select></td>
+            <td id="score3">-</td>
+        </tr>
+        
+        <tr>
+            <td>4</td>
+            <td>
+        <select id="grade4">
+            <option value="고급">고급</option>
+            <option value="희귀">희귀</option>
+            <option value="영웅" selected>영웅</option>
+            <option value="+8 회귀 연성의 망치 (캐릭터 귀속)">+8 회귀 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+11 회귀 연성의 망치 (캐릭터 귀속)">+11 회귀 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+5 영웅 연성의 망치 (캐릭터 귀속)">+5 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+9 영웅 연성의 망치 (캐릭터 귀속)">+9 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+12 영웅 연성의 망치 (캐릭터 귀속)">+12 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="고급 스킬북">고급 스킬북</option>
+            <option value="희귀 스킬북">희귀 스킬북</option>
+            <option value="영웅 스킬북">영웅 스킬북</option>
+        </select></td>
+            <td id="level_cell4"><select id='level4'><option value='1' >1</option><option value='2' >2</option><option value='3' >3</option><option value='4' >4</option><option value='5' selected>5</option><option value='6' >6</option><option value='7' >7</option><option value='8' >8</option><option value='9' >9</option><option value='10' >10</option><option value='11' >11</option><option value='12' >12</option></select></td>
+            <td id="type_cell4">
+        <select id="type4">
+            <option value="거래 가능" selected>거래 가능</option>
+            <option value="귀속">귀속</option>
+        </select></td>
+            <td id="score4">-</td>
+        </tr>
+        
+        <tr>
+            <td>5</td>
+            <td>
+        <select id="grade5">
+            <option value="고급">고급</option>
+            <option value="희귀">희귀</option>
+            <option value="영웅" selected>영웅</option>
+            <option value="+8 회귀 연성의 망치 (캐릭터 귀속)">+8 회귀 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+11 회귀 연성의 망치 (캐릭터 귀속)">+11 회귀 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+5 영웅 연성의 망치 (캐릭터 귀속)">+5 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+9 영웅 연성의 망치 (캐릭터 귀속)">+9 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="+12 영웅 연성의 망치 (캐릭터 귀속)">+12 영웅 연성의 망치 (캐릭터 귀속)</option>
+            <option value="고급 스킬북">고급 스킬북</option>
+            <option value="희귀 스킬북">희귀 스킬북</option>
+            <option value="영웅 스킬북">영웅 스킬북</option>
+        </select></td>
+            <td id="level_cell5"><select id='level5'><option value='1' >1</option><option value='2' >2</option><option value='3' >3</option><option value='4' >4</option><option value='5' selected>5</option><option value='6' >6</option><option value='7' >7</option><option value='8' >8</option><option value='9' >9</option><option value='10' >10</option><option value='11' >11</option><option value='12' >12</option></select></td>
+            <td id="type_cell5">
+        <select id="type5">
+            <option value="거래 가능" selected>거래 가능</option>
+            <option value="귀속">귀속</option>
+        </select></td>
+            <td id="score5">-</td>
+        </tr>
+        
+  </table>
+
+  <h3>총 점수 합산: <span id="totalScore">0</span> 점</h3>
+  <h3>조합 예측 단계: <span id="stageResult">-</span></h3>
+
+  <div style="margin-top: 60px;"></div>
+<h2>1. 장비 포인트 표</h2>
+  <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>등급</th>
+      <th>강화 단계</th>
+      <th>거래 가능</th>
+      <th>귀속</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>고급</td>
+      <td>1</td>
+      <td>10</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>2</td>
+      <td>10</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>3</td>
+      <td>10</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>4</td>
+      <td>12</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>5</td>
+      <td>15</td>
+      <td>7.5</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>6</td>
+      <td>20</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>7</td>
+      <td>30</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>8</td>
+      <td>40</td>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>9</td>
+      <td>55</td>
+      <td>27.5</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>10</td>
+      <td>75</td>
+      <td>37.5</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>11</td>
+      <td>100</td>
+      <td>50.0</td>
+    </tr>
+    <tr>
+      <td>고급</td>
+      <td>12</td>
+      <td>130</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>1</td>
+      <td>30</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>2</td>
+      <td>30</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>3</td>
+      <td>30</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>4</td>
+      <td>36</td>
+      <td>18.0</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>5</td>
+      <td>45</td>
+      <td>22.5</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>6</td>
+      <td>60</td>
+      <td>30.0</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>7</td>
+      <td>90</td>
+      <td>45.0</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>8</td>
+      <td>120</td>
+      <td>60.0</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>9</td>
+      <td>165</td>
+      <td>82.5</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>10</td>
+      <td>225</td>
+      <td>112.5</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>11</td>
+      <td>300</td>
+      <td>150.0</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>12</td>
+      <td>390</td>
+      <td>195.0</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>1</td>
+      <td>150</td>
+      <td>75.0</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>2</td>
+      <td>150</td>
+      <td>75.0</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>3</td>
+      <td>150</td>
+      <td>75.0</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>4</td>
+      <td>180</td>
+      <td>90.0</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>5</td>
+      <td>225</td>
+      <td>112.5</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>6</td>
+      <td>300</td>
+      <td>150.0</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>7</td>
+      <td>450</td>
+      <td>225.0</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>8</td>
+      <td>600</td>
+      <td>300.0</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>9</td>
+      <td>825</td>
+      <td>412.5</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>10</td>
+      <td>1125</td>
+      <td>562.5</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>11</td>
+      <td>1500</td>
+      <td>750.0</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>12</td>
+      <td>1950</td>
+      <td>975.0</td>
+    </tr>
+  </tbody>
+</table>
+
+  <h2>2. 연성의 망치 포인트</h2>
+  <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>명칭</th>
+      <th>획득 포인트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>+8 회귀 연성의 망치 (캐릭터 귀속)</td>
+      <td>60</td>
+    </tr>
+    <tr>
+      <td>+11 회귀 연성의 망치 (캐릭터 귀속)</td>
+      <td>165</td>
+    </tr>
+    <tr>
+      <td>+5 영웅 연성의 망치 (캐릭터 귀속)</td>
+      <td>110</td>
+    </tr>
+    <tr>
+      <td>+9 영웅 연성의 망치 (캐릭터 귀속)</td>
+      <td>450</td>
+    </tr>
+    <tr>
+      <td>+12 영웅 연성의 망치 (캐릭터 귀속)</td>
+      <td>975</td>
+    </tr>
+  </tbody>
+</table>
+
+  <h2>3. 스킬북 포인트</h2>
+  <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>등급</th>
+      <th>거래 가능</th>
+      <th>귀속</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>고급</td>
+      <td>10</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>희귀</td>
+      <td>30</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td>영웅</td>
+      <td>150</td>
+      <td>75</td>
+    </tr>
+  </tbody>
+</table>
+
+  <h2>4. 조합 예측 단계</h2>
+  <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>조합 예측 단계</th>
+      <th>최소값</th>
+      <th>최대값</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1단계</td>
+      <td>1</td>
+      <td>149</td>
+    </tr>
+    <tr>
+      <td>2단계</td>
+      <td>150</td>
+      <td>189</td>
+    </tr>
+    <tr>
+      <td>3단계</td>
+      <td>190</td>
+      <td>329</td>
+    </tr>
+    <tr>
+      <td>4단계</td>
+      <td>330</td>
+      <td>699</td>
+    </tr>
+    <tr>
+      <td>5단계</td>
+      <td>700</td>
+      <td>899</td>
+    </tr>
+    <tr>
+      <td>6단계</td>
+      <td>900</td>
+      <td>1499</td>
+    </tr>
+    <tr>
+      <td>7단계</td>
+      <td>1500</td>
+      <td>2199</td>
+    </tr>
+    <tr>
+      <td>8단계</td>
+      <td>2200</td>
+      <td>2999</td>
+    </tr>
+    <tr>
+      <td>9단계</td>
+      <td>3000</td>
+      <td>3999</td>
+    </tr>
+    <tr>
+      <td>10단계</td>
+      <td>4000</td>
+      <td>5499</td>
+    </tr>
+    <tr>
+      <td>11단계</td>
+      <td>5500</td>
+      <td>7499</td>
+    </tr>
+    <tr>
+      <td>12단계</td>
+      <td>7500</td>
+      <td>9499</td>
+    </tr>
+    <tr>
+      <td>13단계</td>
+      <td>9500</td>
+      <td>63375</td>
+    </tr>
+  </tbody>
+</table>
+
+  
+<script>
+const scoreTable = {"영웅_1": {"거래 가능": 150, "귀속": 75.0}, "영웅_2": {"거래 가능": 150, "귀속": 75.0}, "영웅_3": {"거래 가능": 150, "귀속": 75.0}, "영웅_4": {"거래 가능": 180, "귀속": 90.0}, "영웅_5": {"거래 가능": 225, "귀속": 112.5}, "영웅_6": {"거래 가능": 300, "귀속": 150.0}, "영웅_7": {"거래 가능": 450, "귀속": 225.0}, "영웅_8": {"거래 가능": 600, "귀속": 300.0}, "영웅_9": {"거래 가능": 825, "귀속": 412.5}, "영웅_10": {"거래 가능": 1125, "귀속": 562.5}, "영웅_11": {"거래 가능": 1500, "귀속": 750.0}, "영웅_12": {"거래 가능": 1950, "귀속": 975.0}, "고급_1": {"거래 가능": 10, "귀속": 5.0}, "고급_2": {"거래 가능": 10, "귀속": 5.0}, "고급_3": {"거래 가능": 10, "귀속": 5.0}, "고급_4": {"거래 가능": 12, "귀속": 6.0}, "고급_5": {"거래 가능": 15, "귀속": 7.5}, "고급_6": {"거래 가능": 20, "귀속": 10.0}, "고급_7": {"거래 가능": 30, "귀속": 15.0}, "고급_8": {"거래 가능": 40, "귀속": 20.0}, "고급_9": {"거래 가능": 55, "귀속": 27.5}, "고급_10": {"거래 가능": 75, "귀속": 37.5}, "고급_11": {"거래 가능": 100, "귀속": 50.0}, "고급_12": {"거래 가능": 130, "귀속": 65.0}, "희귀_1": {"거래 가능": 30, "귀속": 15.0}, "희귀_2": {"거래 가능": 30, "귀속": 15.0}, "희귀_3": {"거래 가능": 30, "귀속": 15.0}, "희귀_4": {"거래 가능": 36, "귀속": 18.0}, "희귀_5": {"거래 가능": 45, "귀속": 22.5}, "희귀_6": {"거래 가능": 60, "귀속": 30.0}, "희귀_7": {"거래 가능": 90, "귀속": 45.0}, "희귀_8": {"거래 가능": 120, "귀속": 60.0}, "희귀_9": {"거래 가능": 165, "귀속": 82.5}, "희귀_10": {"거래 가능": 225, "귀속": 112.5}, "희귀_11": {"거래 가능": 300, "귀속": 150.0}, "희귀_12": {"거래 가능": 390, "귀속": 195.0}, "+8 회귀 연성의 망치 (캐릭터 귀속)": 60, "+11 회귀 연성의 망치 (캐릭터 귀속)": 165, "+5 영웅 연성의 망치 (캐릭터 귀속)": 110, "+9 영웅 연성의 망치 (캐릭터 귀속)": 450, "+12 영웅 연성의 망치 (캐릭터 귀속)": 975, "고급 스킬북": {"거래 가능": 10, "귀속": 5}, "희귀 스킬북": {"거래 가능": 30, "귀속": 15}, "영웅 스킬북": {"거래 가능": 150, "귀속": 75}};
+const combinationStages = [{"단계": "1단계", "최소": 1, "최대": 149}, {"단계": "2단계", "최소": 150, "최대": 189}, {"단계": "3단계", "최소": 190, "최대": 329}, {"단계": "4단계", "최소": 330, "최대": 699}, {"단계": "5단계", "최소": 700, "최대": 899}, {"단계": "6단계", "최소": 900, "최대": 1499}, {"단계": "7단계", "최소": 1500, "최대": 2199}, {"단계": "8단계", "최소": 2200, "최대": 2999}, {"단계": "9단계", "최소": 3000, "최대": 3999}, {"단계": "10단계", "최소": 4000, "최대": 5499}, {"단계": "11단계", "최소": 5500, "최대": 7499}, {"단계": "12단계", "최소": 7500, "최대": 9499}, {"단계": "13단계", "최소": 9500, "최대": 63375}];
+
+function updateAll() {
+    let total = 0;
+    for (let i = 1; i <= 5; i++) {
+        const grade = document.getElementById("grade"+i).value;
+        const levelCell = document.getElementById("level_cell"+i);
+        const typeCell = document.getElementById("type_cell"+i);
+
+        const isHammer = grade.includes("연성의 망치");
+        const isSkillbook = grade.includes("스킬북");
+
+        let score = 0;
+
+        if (isHammer) {
+            levelCell.innerHTML = "-";
+            typeCell.innerHTML = "-";
+            score = scoreTable[grade] || 0;
+        } else {
+            // 복원 level select
+            if (!isSkillbook && levelCell.innerHTML === "-") {
+                let levelHtml = "<select id='level" + i + "'>";
+                for (let j = 1; j <= 12; j++) {
+                    levelHtml += "<option value='" + j + "'>" + j + "</option>";
+                }
+                levelHtml += "</select>";
+                levelCell.innerHTML = levelHtml;
+                document.getElementById("level" + i).addEventListener("change", updateAll);
+            }
+
+            // 복원 type select
+            if (typeCell.innerHTML === "-" || typeCell.innerHTML.trim() === "") {
+                let typeHtml = "<select id='type" + i + "'>";
+                typeHtml += "<option value='거래 가능'>거래 가능</option>";
+                typeHtml += "<option value='귀속'>귀속</option>";
+                typeHtml += "</select>";
+                typeCell.innerHTML = typeHtml;
+                document.getElementById("type" + i).addEventListener("change", updateAll);
+            }
+
+            const typeEl = document.getElementById("type" + i);
+            const type = typeEl ? typeEl.value : "거래 가능";
+
+            if (isSkillbook) {
+                levelCell.innerHTML = "-";
+                score = scoreTable[grade] ? scoreTable[grade][type] : 0;
+            } else {
+                const levelEl = document.getElementById("level" + i);
+                const level = levelEl ? parseInt(levelEl.value) : 1;
+                const key = grade + "_" + level;
+                score = scoreTable[key] ? scoreTable[key][type] : 0;
+            }
+        }
+
+        document.getElementById("score" + i).innerText = score;
+        total += parseFloat(score);
+    }
+
+    document.getElementById("totalScore").innerText = total;
+    let stage = "해당 없음";
+    for (let j = 0; j < combinationStages.length; j++) {
+        const r = combinationStages[j];
+        if (total >= r.최소 && total <= r.최대) {
+            stage = r.단계;
+            break;
+        }
+    }
+    document.getElementById("stageResult").innerText = stage;
+}
+
+window.onload = function() {
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById("grade"+i).addEventListener("change", updateAll);
+        document.getElementById("level"+i).addEventListener("change", updateAll);
+        document.getElementById("type"+i).addEventListener("change", updateAll);
+    }
+    updateAll();
+};
+</script>
+
+</body>
+</html>
